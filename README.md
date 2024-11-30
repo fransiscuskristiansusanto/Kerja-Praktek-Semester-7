@@ -1,14 +1,14 @@
-# Navirin's Hand Bouquet
+# Seimbang.or
 
-Aplikasi Navirin's berbasis Python Flask dengan MongoDB
+Aplikasi Seimbang.or berbasis Python Flask dengan MongoDB
 
 ## Deskripsi
 
-Navirin's merupakan aplikasi dasar berbasis Flask yang menggambarkan promosi, interaksi, dan penjualan dari Navirin's kepada pelanggan. Aplikasi ini menyediakan beberapa fitur dasar yang dapat digunakan, seperti pemesanan buket, obrolan antar penjual dan pelanggan, histori pembayaran pelanggan, dan status pengiriman buket.
+Seimbang adalah penyedia layanan psikologi yang berfokus pada kesehatan mental dewasa. Dengan spesialisasi dalam Praktek Psikolog Klinis Dewasa, kami menawarkan layanan yang meliputi <b>asesmen</b>, <b>konseling</b>, dan <b>psikoterapi</b> untuk membantu individu menemukan keseimbangan hidup mereka. Kami berkomitmen untuk memberikan dukungan yang dibutuhkan untuk mengatasi berbagai tantangan kesehatan mental melalui pendekatan yang profesional dan berbasis bukti. Layanan kami tersedia di beberapa lokasi, termasuk <b>Bandung</b>, <b>Bekasi</b>, dan <b>Padang</b>. <b>Find ur Balance</b> bersama kami, karena kesehatan mental adalah kunci untuk kualitas hidup yang lebih baik.
 
-![alt text](https://img.shields.io/badge/Flask-3.0.3--api-ready-blue.svg "navirin's")
-![alt text](https://img.shields.io/badge/MongoDB-6.5.0-brightgreen.svg "navirin's")
-![alt text](https://img.shields.io/badge/JWT-Ready-blue.svg "navirin's")
+![alt text](https://img.shields.io/badge/Flask-3.0.3--api-ready-blue.svg "Seimbang.or")
+![alt text](https://img.shields.io/badge/MongoDB-6.5.0-brightgreen.svg "Seimbang.or")
+![alt text](https://img.shields.io/badge/JWT-Ready-blue.svg "Seimbang.or")
 
 ---
 ## Prasyarat
@@ -23,7 +23,7 @@ Navirin's merupakan aplikasi dasar berbasis Flask yang menggambarkan promosi, in
 Clone repositori di sistem lokal Anda:
 
 ````shell
-$ git clone https://github.com/kristian49/AMD-no-yujin.git
+$ git clone https://github.com/kristian49/Kerja-Praktek-Semester-7.git
 ````
 
 Buat virtual env di dalam folder:

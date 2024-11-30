@@ -6,7 +6,6 @@ Aplikasi Seimbang.or berbasis Python Flask dengan MongoDB
 
 Seimbang adalah penyedia layanan psikologi yang berfokus pada kesehatan mental dewasa. Dengan spesialisasi dalam Praktek Psikolog Klinis Dewasa, kami menawarkan layanan yang meliputi <b>asesmen</b>, <b>konseling</b>, dan <b>psikoterapi</b> untuk membantu individu menemukan keseimbangan hidup mereka. Kami berkomitmen untuk memberikan dukungan yang dibutuhkan untuk mengatasi berbagai tantangan kesehatan mental melalui pendekatan yang profesional dan berbasis bukti. Layanan kami tersedia di beberapa lokasi, termasuk <b>Bandung</b>, <b>Bekasi</b>, dan <b>Padang</b>. <b>Find ur Balance</b> bersama kami, karena kesehatan mental adalah kunci untuk kualitas hidup yang lebih baik.
 
-![alt text](https://img.shields.io/badge/Flask-3.0.3--api-ready-blue.svg "Seimbang.or")
 ![alt text](https://img.shields.io/badge/MongoDB-6.5.0-brightgreen.svg "Seimbang.or")
 ![alt text](https://img.shields.io/badge/JWT-Ready-blue.svg "Seimbang.or")
 

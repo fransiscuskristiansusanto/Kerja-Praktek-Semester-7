@@ -1,0 +1,136 @@
+{% include 'user/templates/header.html' %}
+<main id="main" class="mt-5">
+  <!-- Carousel -->
+  <section id="hero">
+    <div
+      id="heroCarousel"
+      data-bs-interval="5000"
+      class="carousel slide carousel-fade"
+      data-bs-ride="carousel"
+    >
+      <ol class="carousel-indicators" id="hero-carousel-indicators"></ol>
+
+      <div class="carousel-inner" role="listbox">
+        <!-- Bagian 1 -->
+        <div
+          class="carousel-item active"
+          style="background-image: url(../static/user/img/carousel.jpg)"
+        >
+          <div class="carousel-container">
+            <div class="container">
+              <h2 class="animate__animated animate__fadeInDown">
+                <a href="/profil">
+                  <img
+                    src="{{ url_for('static', filename=user_info.profile_pic_real) }}"
+                    alt=""
+                    class="rounded-circle align-self-center"
+                    style="width: 100px; height: 100px; margin-bottom: 20px"
+                  /> </a
+                ><span>Halo, {{ user_info.profile_name }}</span>
+              </h2>
+              <p
+                class="animate__animated animate__fadeInUp"
+                style="
+                  color: whitesmoke;
+                  font-weight: bold;
+                  font-style: italic;
+                  font-size: 25px;
+                "
+              >
+                Selamat Datang di Seimbang.or
+              </p>
+              <a
+                href="#counts"
+                class="btn-get-started animate__animated animate__fadeInUp scrollto"
+                >Lihat Rekap Pemesanan Kamu</a
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Bagian 2 -->
+        <div
+          class="carousel-item"
+          style="background-image: url(../static/user/img/carousel.jpg)"
+        >
+          <div class="carousel-container">
+            <div class="container">
+              <h2 class="animate__animated animate__fadeInDown">
+                Layanan Seimbang.or
+              </h2>
+              <p class="animate__animated animate__fadeInUp">
+                Kami menyediakan berbagai layanan untuk membantu Anda dalam
+                mencapai keSEIMBANGan hidup.
+              </p>
+              <a
+                href="/layanan"
+                class="btn-get-started animate__animated animate__fadeInUp scrollto"
+                >Telusuri Layanan</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <a
+        class="carousel-control-prev"
+        href="#heroCarousel"
+        role="button"
+        data-bs-slide="prev"
+      >
+        <span
+          class="carousel-control-prev-icon bi bi-chevron-left"
+          aria-hidden="true"
+        ></span>
+      </a>
+
+      <a
+        class="carousel-control-next"
+        href="#heroCarousel"
+        role="button"
+        data-bs-slide="next"
+      >
+        <span
+          class="carousel-control-next-icon bi bi-chevron-right"
+          aria-hidden="true"
+        ></span>
+      </a>
+    </div>
+  </section>
+
+  <!-- Rekap -->
+  <section id="counts" class="counts">
+    <div class="container mt-5" data-aos="fade-up">
+      <div class="section-title">
+        <h2>Seimbang.or</h2>
+        <p>Rekap Pemesanan</p>
+      </div>
+      <div class="row no-gutters justify-content-md-center">
+        <div class="col-lg-5 col-md-7 d-md-flex align-items-md-stretch">
+          <div class="count-box">
+            <i class="bi bi-cash-coin"></i>
+            <span class="mt-2"
+            >{{ total_pemesanan_rupiah }}</span>
+            <p>
+              <strong>Total Pemesanan</strong>
+            </p>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-4 d-md-flex align-items-md-stretch">
+          <div class="count-box">
+            <i class="bi bi-flower2"></i>
+            <span
+              data-purecounter-start="0"
+              data-purecounter-end="{{ total_layanan }}"
+              data-purecounter-duration="1"
+              class="purecounter mt-2"
+            ></span>
+            <p><strong>Total Paket Layanan yang Telah Dipesan</strong></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+{% include 'user/templates/footer.html' %}

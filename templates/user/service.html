@@ -1,0 +1,114 @@
+{% include 'user/templates/header.html' %}
+<main id="main" class="mt-5">
+
+    <!-- Layanan -->
+    <section id="portfolio" class="portfolio">
+        <div class="container" data-aos="fade-up">
+
+            <div class="section-title">
+                <h2>Layanan</h2>
+                <p>Layanan Seimbang.or</p>
+            </div>
+
+            <div class="row" data-aos="fade-up" data-aos-delay="100">
+                <div class="col-lg-12 d-flex justify-content-center">
+                    <ul id="portfolio-flters">
+                        <li data-filter="*" class="filter-active">Semua</li>
+                        <li data-filter=".Asesmen">Asesmen</li>
+                        <li data-filter=".Konseling">Konseling</li>
+                        <li data-filter=".Psikoterapi">Psikoterapi</li>
+                        <li data-filter=".Psikoedukasi">Psikoedukasi</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Deskripsi Filter -->
+            <div class="row" data-aos="fade-up" data-aos-delay="150">
+                <div class="col-md-12 md-5 d-flex justify-content-center">
+                    <div id="filter-descriptions">
+                        <div class="filter-description" id="Asesmen-description">
+                            <p>
+                                <small>Asesmen psikologis adalah proses pengumpulan informasi yang sistematis dan terstruktur mengenai individu, kelompok, atau organisasi dengan tujuan untuk memahami kondisi psikologis mereka. Proses ini mencakup penggunaan berbagai alat ukur, seperti tes psikologi, wawancara, dan observasi, untuk menilai aspek-aspek seperti kepribadian, kecerdasan, emosi, perilaku, serta kemampuan sosial. Asesmen biasanya dilakukan oleh psikolog berlisensi dan hasilnya digunakan untuk memberikan gambaran yang lebih jelas tentang kondisi atau kebutuhan individu.</small>
+                            </p>
+                            <hr>
+                        </div>
+                        <div class="filter-description" id="Konseling-description">
+                            <p>
+                                <small>Konseling adalah proses interaksi antara seorang konselor atau psikolog dengan individu atau kelompok untuk membantu mengatasi masalah emosional, sosial, atau psikologis. Dalam konseling, klien diberikan ruang untuk berbicara tentang perasaan, pengalaman, dan tantangan yang mereka hadapi. Tujuan dari konseling adalah untuk memberikan dukungan dan pemahaman, serta membantu klien dalam menemukan solusi atau mengembangkan strategi coping yang lebih baik. Konseling sering kali lebih berfokus pada masalah spesifik dan bersifat jangka pendek.</small>
+                            </p>
+                            <hr>
+                        </div>
+                        <div class="filter-description" id="Psikoterapi-description">
+                            <p>
+                                <small>Psikoterapi adalah bentuk pengobatan psikologis yang lebih intensif, di mana seorang terapis bekerja dengan individu untuk mengatasi gangguan mental atau emosional yang lebih serius, seperti depresi, kecemasan, atau trauma. Proses ini melibatkan percakapan mendalam yang bertujuan untuk menggali akar permasalahan, memahami pola perilaku yang tidak sehat, dan membantu individu mengubah cara berpikir dan bertindak. Psikoterapi dapat berlangsung dalam jangka panjang dan menggunakan berbagai pendekatan, seperti terapi perilaku kognitif, terapi psikoanalitik, atau terapi humanistik.</small>
+                            </p>
+                            <hr>
+                        </div>
+                        <div class="filter-description" id="Psikoedukasi-description">
+                            <p>
+                                <small>Psikoedukasi adalah proses memberikan informasi dan pengetahuan terkait kesehatan mental dan psikologis kepada individu atau kelompok. Tujuannya adalah untuk meningkatkan pemahaman, kesadaran, dan keterampilan dalam mengelola kesehatan mental mereka. Psikoedukasi dapat mencakup materi tentang stres, kecemasan, depresi, serta cara-cara untuk mengelola emosi dan membangun kesejahteraan mental. Program ini sering diterapkan dalam bentuk workshop, seminar, atau sesi pendidikan, baik untuk individu maupun komunitas.</small>
+                            </p>
+                            <hr>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row portfolio-container mt-3" data-aos="fade-up" data-aos-delay="200">
+                {% for service in services %}
+                    {% if service.category == 'Asesmen' %}
+                    <div class="col-lg-4 col-md-6 portfolio-item Asesmen">
+                    {% elif service.category == 'Konseling' %}
+                    <div class="col-lg-4 col-md-6 portfolio-item Konseling">
+                    {% elif service.category == 'Psikoterapi' %}
+                    <div class="col-lg-4 col-md-6 portfolio-item Psikoterapi">
+                    {% elif service.category == 'Psikoedukasi' %}
+                    <div class="col-lg-4 col-md-6 portfolio-item Psikoedukasi">
+                    {% endif %}
+                        <img src="{{ url_for('static', filename=service.image) }}" class="img-fluid portfolio-img" alt="{{ service.name }}">
+                        <div class="portfolio-info">
+                            <h4>{{service.name}}</h4>
+                            <p>{{service.category}}</p>
+                            <p class="card-text"><strong>Rp {{ service.price }}</strong></p><br>
+                            <a href="{{ url_for('static', filename=service.image) }}" data-gallery="portfolioGallery" class="portfolio-lightbox preview-link" title="Rincian lebih lanjut" data-title="{{service.name}}" data-description="{{ service.description }}"><i class="bx bx-zoom-in"></i></a>
+                            <a data-id="{{service['_id']}}" class="details-link purchase-button" title="Formulir Pembayaran {{service.name}}"><i class='bx bx-shopping-bag'></i></a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+        </div>
+    </section>
+
+</main>
+{% include 'user/templates/footer.html' %}
+<script>
+    $('.purchase-button').click(function() {
+        var id = $(this).data('id');
+        var quantity = $('#quantity-' + id).val();
+        var url = '/pembayaran?quantity=' + 1 + '&service_id=' + id;
+        window.location.href = url;
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const filters = document.querySelectorAll('#portfolio-flters li');
+        const descriptions = document.querySelectorAll('.filter-description');
+
+        filters.forEach(filter => {
+            filter.addEventListener('click', () => {
+                descriptions.forEach(description => {
+                    description.style.display = 'none';
+                });
+
+                const filterClass = filter.getAttribute('data-filter').substring(1) + '-description';
+                const activeDescription = document.getElementById(filterClass);
+                if (activeDescription) {
+                    activeDescription.style.display = 'block';
+                }
+            });
+        });
+
+        // Tampilkan deskripsi untuk filter aktif pertama kali
+        document.querySelector('.filter-active').click();
+    });
+</script>

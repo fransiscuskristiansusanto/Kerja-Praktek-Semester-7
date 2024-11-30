@@ -1,0 +1,53 @@
+{% include 'user/auth/templates/header.html' %}
+<main id="main" class="mt-5">
+  <!-- Kontak Section -->
+  <section id="contact" class="contact section-bg">
+    <div class="container" data-aos="fade-up">
+      <div class="section-title">
+        <h2>Masuk</h2>
+        <p>Masuk ke akun Anda</p>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="row">
+            <div
+              class="row d-flex flex-column align-items-center justify-content-center"
+            >
+              <img
+                src="{{ url_for('static', filename='user/img/logo.png') }}"
+                style="width: 70%"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-6">
+          <div class="fillable-form">
+            <div class="row">
+              <div class="col-md-6 form-group">
+                <!-- <i class='bx bx-first-page'></i> -->
+                <label for="yourEmail" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" autofocus />
+                <div id="emailFeedback" class="text-warning"></div>
+              </div>
+              <div class="col-md-6 form-group mt-3 mt-md-0">
+                <label for="yourPassword" class="form-label">Kata Sandi</label>
+                <input type="password" class="form-control" id="password" />
+                <div id="passwordFeedback" class=""></div>
+              </div>
+            </div>
+            <div class="text-center mt-5">
+              <button type="submit" onclick="loginSuperAdmin()">Masuk</button>
+              <button type="submit" onclick="clearInputs()">Bersihkan</button>
+            </div>
+            <div class="text-center mt-3">
+              Tidak punya akun? <a href="../daftar/superadmin">Daftar</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+{% include 'user/auth/templates/footer.html' %}

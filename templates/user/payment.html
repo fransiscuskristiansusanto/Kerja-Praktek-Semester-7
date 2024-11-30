@@ -1,0 +1,123 @@
+{% include 'user/templates/header.html' %}
+<main id="main" class="mt-5">
+
+    <!-- Form Pembayaran -->
+    <section id="contact" class="contact section-bg">
+        <div class="container" data-aos="fade-up">
+  
+            <div class="section-title">
+                <h2>Pembayaran</h2>
+                <p>Formulir Pembayaran</p>
+            </div>
+
+            <div class="row mt-4 justify-content-md-center">
+                <div class="col-lg-8">
+                    <div action="/pembayaran" method="POST" enctype="multipart/form-data">
+                        <div class="fillable-form">
+                            <h5 class="mt-2 mb-4">Layanan yang Dipesan</h5>
+                            <div class="row">
+                                <input type="hidden" name="service_id" id="service_id" value="{{ service._id }}">
+
+                                <div class="col-md-4 form-group justify-content-center align-items-center text-center">
+                                    <img src="{{ url_for('static', filename=service.image) }}" class="img-fluid rounded-3" width="40%" height="40%" alt="{{service.name}}">
+                                    <div class="text-center">
+                                        <p class="lead fw-normal mt-2 mb-4 mb-md-0 text-center">{{service.name}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 form-group mt-3 mt-md-0 d-flex align-items-center justify-content-center">
+                                    <button class="btn btn-link px-2" onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                    <input id="content_quantity" min="1" name="quantity" value="{{quantity}}" type="number" class="form-control form-control-sm text-center">
+                                    <button class="btn btn-link px-2" onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                                <div class="col-md-4 form-group mt-3 mt-md-0 d-flex align-items-center justify-content-center">
+                                    <div id="service-price" style="display: none;">{{service.price}}</div>
+                                    <h5 class="mb-0 text-center total-price">Rp {{quantity*price}}</h5>
+                                </div>
+                            </div>
+                            <div class="row mt-4">
+                                <div class="col-md-6 form-group">
+                                    <div class="row">
+                                        <div class="col-md-12 mb-1">
+                                            <label for="inputDate" class="col-sm-12 col-form-label">Tanggal Layanan</label>
+                                            <div class="col-sm-12">
+                                                <input type="date" class="form-control" name="date" id="date" required>
+                                            </div>
+                                            <small class="form-text text-muted">Tanggal layanan minimal H+3 pemesanan</small>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 mt-2 mt-md-0">
+                                            <label for="inputTime" class="col-sm-12 col-form-label">Waktu Layanan</label>
+                                            <div class="col-sm-12">
+                                                <input type="time" class="form-control" name="time" id="time" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 form-group mt-3 mt-md-0">
+                                    <label for="greetingCard" class="form-label">Catatan Pemesan</label>
+                                    <textarea class="form-control" name="note_of_buyer" id="note_of_buyer" rows="5" placeholder="Masukkan catatan pemesanan kepada Seimbang.or"></textarea>
+                                    <small class="form-text text-muted">Pemesan dapat menuliskan pesan tambahan untuk layanan yang dibeli</small>
+                                </div>
+                            </div>
+                            <div class="row mt-4">
+                                <div class="col-md-6 form-group">
+                                    <label for="nameOfBuyer" class="form-label">Nama Pemesan</label>
+                                    <input type="text" class="form-control" name="name_of_buyer" id="name_of_buyer" placeholder="Masukkan nama lengkap penerima" value="{{user_info.profile_name}}" required>
+                                </div>
+                                <div class="col-md-6 form-group mt-3 mt-md-0">
+                                    <label for="phoneOfBuyer" class="form-label">No. Telepon Pemesan</label>
+                                    <input type="tel" class="form-control" name="phone_of_buyer" id="phone_of_buyer" placeholder="Masukkan nomor telepon penerima" value="{{user_info.phone}}" required>
+                                </div>
+                            </div>
+                            <div class="row mt-4">
+                                <div class="col-md-12 form-group text-center">
+                                    <label for="payment" class="form-label">Pembayaran (via QRIS)</label>
+                                    <div id="paymentMethod" class="d-flex justify-content-center">
+                                        <img src="{{ url_for('static', filename='user/img/sample_qr_code.png') }}" alt="QRIS" style="width: 100%; max-width: 200px;">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-4">
+                                <div class="col-md-6 form-group">
+                                    <label for="totalPrice" class="col-sm-12 col-form-label">Total Harga Layanan</label>
+                                    <p class="fs-6 mt-2 qris-price">Rp {{quantity*price}}</p>
+                                </div>
+                                <div class="col-md-6 form-group mt-3 mt-md-0">
+                                    <label for="inputTime" class="col-sm-12 col-form-label">Bukti Pembayaran</label>
+                                    <input type="file" class="form-control" id="proof_of_payment" name="proof_of_payment" required>
+                                </div>
+                            </div>
+                            <div class="text-center mt-5">
+                                <button type="submit" onclick="pay()" id="order-button" data-id="{{service['_id']}}">Pesan</button>
+                                <a href="/layanan" id="btn-batal">Batal</a>
+                            </div>        
+                        </div>
+                    </div>
+                </div>
+            </div>
+  
+        </div>
+    </section>
+
+</main>
+{% include 'user/templates/footer.html' %}
+<script>
+    $(document).ready(function() {
+        let price = Number($('#service-price').text());
+        
+        function updatePrice() {
+            let quantity = $('#content_quantity').val();
+            let totalPrice = quantity * price;
+            $('.total-price').text('Rp ' + totalPrice);
+            $('.qris-price').text('Rp ' + totalPrice);
+        }
+    
+        $('#content_quantity').on('input', updatePrice);
+        $('.btn-link').on('click', updatePrice);
+    });
+</script>

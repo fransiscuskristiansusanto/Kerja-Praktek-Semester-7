@@ -1,0 +1,88 @@
+{% include 'user/auth/templates/header.html' %}
+<main id="main" class="mt-5">
+  <!-- Daftar -->
+  <section id="contact" class="contact section-bg">
+    <div class="container" data-aos="fade-up">
+      <div class="section-title">
+        <h2>Daftar</h2>
+        <p>Membuat sebuah akun</p>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-6">
+          <div
+            class="row d-flex flex-column align-items-center justify-content-center"
+          >
+            <img
+              src="{{ url_for('static', filename='user/img/logo.png') }}"
+              style="width: 70%"
+            />
+          </div>
+        </div>
+
+        <div class="col-lg-6">
+          <div class="fillable-form">
+            <div class="row">
+              <div class="col-md-6 form-group">
+                <label for="firstName" class="form-label">Nama Depan</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="first-name"
+                  autofocus
+                />
+                <div id="firstNameFeedback" class="text-warning"></div>
+              </div>
+              <div class="col-md-6 form-group mt-3 mt-md-0">
+                <label for="lastName" class="form-label">Nama Belakang</label>
+                <input type="text" class="form-control" id="last-name" />
+                <div id="lastNameFeedback" class="text-warning"></div>
+              </div>
+            </div>
+            <div class="row mt-3">
+              <div class="col-md-6 form-group">
+                <label for="accountName" class="form-label">Nama Akun</label>
+                <div class="input-group has-validation">
+                  <span class="input-group-text" id="inputGroupPrepend">@</span>
+                  <input type="text" class="form-control" id="account-name" />
+                  <div id="accountNameFeedback" class="text-warning"></div>
+                </div>
+              </div>
+              <div class="col-md-6 form-group mt-3 mt-md-0">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" />
+                <div id="emailFeedback" class="text-warning"></div>
+              </div>
+            </div>
+            <div class="row mt-3">
+              <div class="col-md-6 form-group">
+                <label for="password" class="form-label">Kata Sandi</label>
+                <input type="password" class="form-control" id="password" />
+                <div id="passwordFeedback" class="text-warning"></div>
+              </div>
+              <div class="col-md-6 form-group mt-3 mt-md-0">
+                <label for="repeatPassword" class="form-label"
+                  >Konfirmasi Kata Sandi</label
+                >
+                <input
+                  type="password"
+                  class="form-control"
+                  id="repeat-password"
+                />
+                <div id="repeatPasswordFeedback" class=""></div>
+              </div>
+            </div>
+            <div class="text-center mt-5">
+              <button type="submit" onclick="registerAdmin()">Daftar</button>
+              <button type="submit" onclick="clearInputs()">Bersihkan</button>
+            </div>
+            <div class="text-center mt-3">
+              Sudah memiliki akun? <a href="../masuk/admin">Masuk</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+{% include 'user/auth/templates/footer.html' %}

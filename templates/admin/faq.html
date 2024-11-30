@@ -1,0 +1,185 @@
+{% include 'admin/templates/header.html' %}
+<div class="main-panel">
+    <div class="content">
+        <div class="page-inner">
+            <div class="page-header">
+                <h4 class="page-title">Data Q&A</h4>
+                <ul class="breadcrumbs">
+                    <li class="nav-home">
+                        <a href="admin-beranda">
+                            <i class="bi bi-archive"></i>
+                        </a>
+                    </li>
+                    <li class="separator">
+                        <i class="flaticon-right-arrow"></i>
+                    </li>
+                    <li class="nav-item">
+                        <a>Data Q&A</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="d-flex align-items-center">
+                                <h4 class="card-title">Data Q&A</h4>
+                                <button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addFAQ">
+                                <i class="fa fa-plus"></i>
+                                    Tambah Data
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table id="add-row" class="display table table-striped table-hover">
+                                    <thead>
+                                        <tr class="text-center">
+                                            <th>No</th>
+                                            <th>Pertanyaan</th>
+                                            <th>Jawaban</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for faq in faqs %}
+                                        <tr>
+                                            <td>{{loop.index}}</td>
+                                            <td>{{faq.question}}</td>
+                                            <td>{{faq.answer}}</td>
+                                            <td class="text-center">
+                                                <a href="#editFAQ_{{faq['_id']}}" data-toggle="modal" class="btn btn-xs btn-warning">
+                                                    <i class="fa fa-edit"></i> Edit
+                                                </a>
+                                                <a href="#deleteFAQ_{{faq['_id']}}" data-toggle="modal" class="btn btn-xs btn-danger">
+                                                    <i class="fa fa-trash"></i> Hapus
+                                                </a>
+                                            </td>
+                                        </tr>
+
+                                        <!-- Modal Edit -->
+                                        <div class="modal fade" id="editFAQ_{{faq['_id']}}" tabindex="-1" role="dialog" aria-hidden="true">
+                                            <div class="modal-dialog modal-lg" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header no-bd">
+                                                        <h5 class="modal-title">
+                                                            <span class="fw-mediumbold">Edit Data</span>
+                                                        </h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <form action="/edit-pertanyaan-dan-jawaban" method="POST">
+                                                        <div class="modal-body">
+                                                            <input type="hidden" value="{{faq['_id']}}" class="form-control" name="id">
+                                                            <div class="row">
+                                                                <div class="col-md-6 form-group">
+                                                                    <label>Pertanyaan</label>
+                                                                    <textarea class="form-control" style="white-space: pre-line" rows="3" name="question" id="question" required>{{faq.question}}</textarea>
+                                                                </div>
+                                                                <div class="col-md-6 form-group mt-3 mt-md-0">
+                                                                    <label>Jawaban</label>
+                                                                    <textarea class="form-control" style="white-space: pre-line" rows="5" name="answer" id="answer" required>{{faq.answer}}</textarea>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer no-bd">
+                                                        <button type="submit" class="btn btn-primary">
+                                                            <i class="fa fa-save"></i> Simpan
+                                                        </button>
+                                                        <button type="button" class="btn btn-danger" data-dismiss="modal">
+                                                            <i class="fa fa-undo"></i> Batal
+                                                        </button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Modal Hapus -->
+                                        <div class="modal fade" id="deleteFAQ_{{faq['_id']}}" tabindex="-1" role="dialog" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header no-bd">
+                                                        <h5 class="modal-title">
+                                                            <span class="fw-mediumbold">Hapus Data</span>
+                                                        </h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <form action="/hapus-pertanyaan-dan-jawaban" method="POST">
+                                                        <div class="modal-body">
+                                                            <input type="hidden" value="{{faq['_id']}}" class="form-control" name="id">
+                                                            <div class="form-group">
+                                                                <h4>Apakah Anda yakin ingin menghapus data ini?</h4>
+                                                            </div>
+                                                        </div>
+                                                            <div class="modal-footer no-bd">
+                                                            <button type="submit" class="btn btn-danger">
+                                                                <i class="fa fa-trash"></i> Hapus
+                                                            </button>
+                                                            <button type="button" class="btn btn-primary" data-dismiss="modal">
+                                                                <i class="fa fa-undo"></i> Batal
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="addFAQ" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header no-bd">
+                <h5 class="modal-title">
+                    <span class="fw-mediumbold">Tambah Data</span>
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/tambah-pertanyaan-dan-jawaban" method="POST">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label>Pertanyaan</label>
+                            <textarea class="form-control" style="white-space: pre-line" rows="3" name="question" id="question" placeholder="Pertanyaan" required></textarea>
+                        </div>
+                        <div class="col-md-6 form-group mt-3 mt-md-0">
+                            <label>Jawaban</label>
+                            <textarea class="form-control" style="white-space: pre-line" rows="5" name="answer" id="answer" placeholder="Jawaban" required></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer no-bd">
+                    <button type="submit" name="simpan" class="btn btn-primary">
+                        <i class="fa fa-save"></i> Simpan
+                    </button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">
+                        <i class="fa fa-undo"></i> Batal
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% include 'admin/templates/footer.html' %}
+<script>
+    $(document).ready(function () {
+        $("#add-row").DataTable({
+            pageLength: 25,
+        });
+    });
+</script>

@@ -1,0 +1,323 @@
+{% include 'admin/templates/header.html' %}
+        <div class="main-panel">
+            <div class="content">
+                <div class="page-inner">
+                    <div class="page-header">
+                        <h4 class="page-title">Data Layanan</h4>
+                        <ul class="breadcrumbs">
+                            <li class="nav-home">
+                                <a href="admin-beranda">
+                                    <i class="bi bi-archive"></i>
+                                </a>
+                            </li>
+                            <li class="separator">
+                                <i class="flaticon-right-arrow"></i>
+                            </li>
+                            <li class="nav-item">
+                                <a>Data Layanan</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="d-flex align-items-center">
+                                        <h4 class="card-title">Data Layanan</h4>
+                                        <button class="btn btn-primary ml-auto" data-toggle="modal" data-target="#addService">
+                                            <i class="fa fa-plus"></i>
+                                            Tambah Data
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+
+                                    <div class="table-responsive">
+                                        <table id="add-row" class="display table table-striped table-hover">
+                                            <thead>
+                                                <tr class="text-center">
+                                                    <th>No</th>
+                                                    <th>Gambar</th>
+                                                    <th>Nama</th>
+                                                    <th>Kategori</th>
+                                                    <th>Harga</th>
+                                                    <th>Stok</th>
+                                                    <th>Aksi</th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                {% for service in services %}
+                                                <tr>
+                                                    <td class="text-center">{{loop.index}}</td>
+                                                    <td class="text-center">
+                                                        <a href="{{ url_for('static', filename=service.image) }}" target="_blank">
+                                                            <img src="{{ url_for('static', filename=service.image) }}" width="60" height="60">
+                                                        </a>
+                                                    </td>
+                                                    <td>{{service.name}}</td>
+                                                    <td>{{service.category}}</td>
+                                                    <td class="text-end">Rp {{service.price}}</td>
+                                                    <td class="text-end">{{service.stock}}</td>
+                                                    <td class="text-center">
+                                                        <a href="#detailService_{{service['_id']}}" data-toggle="modal" class="btn btn-xs btn-success mb-2">
+                                                            <i class="fa fa-eye"></i> Detail
+                                                        </a>
+                                                        <a href="#editService_{{service['_id']}}" data-toggle="modal" class="btn btn-xs btn-warning mb-2">
+                                                            <i class="fa fa-edit"></i> Edit
+                                                        </a>
+                                                        <a href="#deleteService_{{service['_id']}}" data-toggle="modal" class="btn btn-xs btn-danger mb-2">
+                                                            <i class="fa fa-trash"></i> Hapus
+                                                        </a>
+                                                    </td>
+                                                </tr>
+
+                                                <!-- Modal Detail -->
+                                                <div class="modal fade" id="detailService_{{service['_id']}}" tabindex="-1" role="dialog" aria-hidden="true">
+                                                    <div class="modal-dialog modal-lg" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header no-bd">
+                                                                <h5 class="modal-title">
+                                                                    <span class="fw-mediumbold">Detail Data</span>
+                                                                </h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <form>
+                                                                <div class="modal-body">
+                                                                    <input type="hidden" value="{{service['_id']}}" class="form-control" name="id">
+                                                                    <div class="row">
+                                                                        <div class="col-md-6 form-group">
+                                                                            <label>Nama</label>
+                                                                            <p class="form-control mt-2">{{service.name}}</p>
+                                                                        </div>
+                                                                        <div class="col-md-6 form-group mt-3 mt-md-0">
+                                                                            <div class="col-md-12 form-group mt-3 mt-md-0">
+                                                                                <label>Gambar</label>
+                                                                            </div>
+                                                                            <div class="col-md-12 form-group mt-3 mt-md-0">
+                                                                                <a href="{{ url_for('static', filename=service.image) }}" target="_blank">
+                                                                                    <img src="{{ url_for('static', filename=service.image) }}" width="70" height="70">
+                                                                                </a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col-md-4 form-group">
+                                                                            <label for="editCategory"class="form-label">Kategori</label>
+                                                                            <p class="form-control mt-2">{{service.category}}</p>
+                                                                        </div>
+                                                                        <div class="col-md-4 form-group mt-3 mt-md-0">
+                                                                            <label>Harga</label>
+                                                                            <p class="form-control mt-2">{{service.price}}</p>
+                                                                        </div>
+                                                                        <div class="col-md-4 form-group mt-3 mt-md-0">
+                                                                            <label>Stok</label>
+                                                                            <p class="form-control mt-2">{{service.stock}}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col-md-12 form-group">
+                                                                            <label>Deskripsi</label>
+                                                                            <p class="form-control mt-2">{{service.description}}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer no-bd">
+                                                                    <button type="button" class="btn btn-primary" data-dismiss="modal"></i> Tutup</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Modal Edit -->
+                                                <div class="modal fade" id="editService_{{service['_id']}}" tabindex="-1" role="dialog" aria-hidden="true">
+                                                    <div class="modal-dialog modal-lg" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header no-bd">
+                                                                <h5 class="modal-title">
+                                                                    <span class="fw-mediumbold">Edit Data</span>
+                                                                </h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <form action="/edit-layanan" method="POST" enctype="multipart/form-data">
+                                                                <div class="modal-body">
+                                                                    <input type="hidden" value="{{service['_id']}}" class="form-control" name="id">
+                                                                    <div class="row">
+                                                                        <div class="col-md-6 form-group">
+                                                                            <label>Nama</label>
+                                                                            <input type="text" class="form-control mt-2" name="name" id="name" placeholder="Masukkan nama layanan" value="{{service.name}}" required>
+                                                                        </div>
+                                                                        <div class="col-md-6 form-group mt-3 mt-md-0">
+                                                                            <div class="col-md-12 form-group mt-3 mt-md-0">
+                                                                                <img src="{{ url_for('static', filename=service.image)}}" width="70" height="70">
+                                                                            </div>
+                                                                            <div class="col-md-12 form-group mt-3 mt-md-0">
+                                                                                <label>Gambar</label>
+                                                                                <input type="file" class="form-control mt-2" name="image" id="image" accept=".png, .jpg, .jpeg">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col-md-4 form-group">
+                                                                            <label for="editCategory"class="form-label">Kategori</label>
+                                                                            <select class="form-control" id="editCategory" name="category" required>
+                                                                                {% if service.category == 'Asesmen' %}
+                                                                                <option value="Asesmen" selected>Asesmen</option>
+                                                                                <option value="Konseling">Konseling</option>
+                                                                                <option value="Psikoterapi">Psikoterapi</option>
+                                                                                <option value="Psikoedukasi">Psikoedukasi</option>
+                                                                                {% elif service.category == 'Konseling' %}
+                                                                                <option value="Asesmen">Asesmen</option>
+                                                                                <option value="Konseling" selected>Konseling</option>
+                                                                                <option value="Psikoterapi">Psikoterapi</option>
+                                                                                <option value="Psikoedukasi">Psikoedukasi</option>
+                                                                                {% elif service.category == 'Psikoterapi' %}
+                                                                                <option value="Asesmen">Asesmen</option>
+                                                                                <option value="Konseling">Konseling</option>
+                                                                                <option value="Psikoterapi" selected>Psikoterapi</option>
+                                                                                <option value="Psikoedukasi">Psikoedukasi</option>
+                                                                                {% elif service.category == 'Psikoedukasi' %}
+                                                                                <option value="Asesmen">Asesmen</option>
+                                                                                <option value="Konseling">Konseling</option>
+                                                                                <option value="Psikoterapi">Psikoterapi</option>
+                                                                                <option value="Psikoedukasi" selected>Psikoedukasi</option>
+                                                                                {% endif %}
+                                                                            </select>
+                                                                        </div>
+                                                                        <div class="col-md-4 form-group mt-3 mt-md-0">
+                                                                            <label>Harga</label>
+                                                                            <input type="number" class="form-control mt-2" name="price" id="price" placeholder="Masukkan harga layanan" value="{{service.price}}" required>
+                                                                        </div>
+                                                                        <div class="col-md-4 form-group mt-3 mt-md-0">
+                                                                            <label>Stok</label>
+                                                                            <input type="number" class="form-control mt-2" name="stock" id="stock" placeholder="Masukkan stok layanan" value="{{service.stock}}" required>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col-md-12 form-group">
+                                                                            <label>Deskripsi</label>
+                                                                            <input type="text" class="form-control mt-2" name="description" id="description" placeholder="Masukkan deskripsi" value="{{service.description}}" required>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer no-bd">
+                                                                    <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Simpan</button>
+                                                                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-undo"></i> Batal</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Modal Hapus -->
+                                                <div class="modal fade" id="deleteService_{{service['_id']}}" tabindex="-1" role="dialog" aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header no-bd">
+                                                                <h5 class="modal-title">
+                                                                    <span class="fw-mediumbold">Hapus Data</span>
+                                                                </h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <form action="/hapus-layanan" method="POST" enctype="multipart/form-data">
+                                                                <div class="modal-body">
+                                                                    <input type="hidden" value="{{service['_id']}}" class="form-control" name="id">
+                                                                    <div class="form-group">
+                                                                        <h4>Apakah Anda yakin ingin menghapus data ini?</h4>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer no-bd">
+                                                                    <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i> Hapus</button>
+                                                                    <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-undo"></i> Batal</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Tambah -->
+        <div class="modal fade" id="addService" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header no-bd">
+                        <h5 class="modal-title">
+                            <span class="fw-mediumbold">Tambah Data</span>
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form action="/tambah-layanan" method="POST" enctype="multipart/form-data">
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-6 form-group">
+                                    <label>Nama</label>
+                                    <input type="text" class="form-control mt-2" name="name" id="name" placeholder="Masukkan nama layanan" required>
+                                </div>
+                                <div class="col-md-6 form-group mt-3 mt-md-0">
+                                    <label>Gambar</label>
+                                    <input type="file" class="form-control mt-2" name="image" id="image" accept=".png, .jpg, .jpeg" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 form-group">
+                                    <label for="category" class="form-label">Kategori</label>
+                                    <select class="form-control" id="category" name="category" required>
+                                        <option value="" hidden>Pilih</option>
+                                        <option value="Asesmen">Asesmen</option>
+                                        <option value="Konseling">Konseling</option>
+                                        <option value="Psikoterapi">Psikoterapi</option>
+                                        <option value="Psikoedukasi">Psikoedukasi</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4 form-group mt-3 mt-md-0">
+                                    <label>Harga</label>
+                                    <input type="number" class="form-control mt-2" name="price" id="price" placeholder="Masukkan harga layanan" required>
+                                </div>
+                                <div class="col-md-4 form-group mt-3 mt-md-0">
+                                    <label>Stok Paket</label>
+                                    <input type="number" class="form-control mt-2" name="stock" id="stock" placeholder="Masukkan stok layanan" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 form-group">
+                                    <label>Deskripsi</label>
+                                    <textarea class="form-control mt-2" name="description" id="description" rows="5" cols="40" placeholder="Masukkan deskripsi layanan" required></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer no-bd">
+                            <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Simpan</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-undo"></i> Close</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% include 'admin/templates/footer.html' %}
+<script>
+    $(document).ready(function () {
+        $('#add-row').DataTable({
+            pageLength: 25
+        });
+    });
+</script>

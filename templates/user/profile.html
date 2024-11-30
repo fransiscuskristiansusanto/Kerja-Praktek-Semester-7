@@ -1,0 +1,133 @@
+{% include 'user/templates/header.html' %}
+    <main id="main" class="mt-5">
+
+        <!-- Profil -->
+        <section id="testimonials" class="testimonials section-bg">
+            <div class="container" data-aos="fade-up">
+      
+                <div class="section-title">
+                    <h2>Profil</h2>
+                    <p>Profil Pengguna</p>
+                </div>
+        
+                <div class="testimonials-slider swiper" data-aos="fade-up" data-aos-delay="100">
+                    <div class="swiper-wrapper">
+
+                        <div class="col-lg-4">
+
+                            <div class="testimonial-wrap">
+                                <div class="testimonial-item">
+                                    <img src="{{ url_for('static', filename=user_info.profile_pic_real) }}" class="testimonial-img">
+                                    <h3>{{ user_info.profile_name }}</h3>
+                                    <span>@{{user_info.account_name}}</span>
+                                    <h4 class="mt-1">Role: {{ user_info.role | capitalize }}</h4>
+                                    <p>
+                                        <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                                        {{ user_info.bio }}
+                                        <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                                    </p>
+                                    <div class="text-center mt-5">
+                                        <!-- Edit Profil -->
+                                        <button type="button" class="btn btn-outline-success wide-button" data-bs-toggle="modal" data-bs-target="#editProfile">
+                                            <i class='bx bx-edit'></i>
+                                            Edit Profil
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-lg-8">
+
+                            <div class="testimonial-wrap">
+                                <div class="testimonial-item">
+                                    <h3 class="mb-3 row">Detail Profil</h3>
+                                    <div class="mb-2 row">
+                                        <label for="staticFirstName" class="col-sm-4 col-form-label">Nama Depan</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" readonly class="form-control-plaintext" id="staticFirstName" value="{{ user_info.first_name }}">
+                                        </div>
+                                    </div>
+                                    <div class="mb-2 row">
+                                        <label for="staticLastName" class="col-sm-4 col-form-label">Nama Belakang</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" readonly class="form-control-plaintext" id="staticLastName" value="{{ user_info.last_name }}">
+                                        </div>
+                                    </div>
+                                    <div class="mb-2 row">
+                                        <label for="staticAccountName" class="col-sm-4 col-form-label">Nama Akun</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" readonly class="form-control-plaintext" id="staticAccountName" value="{{ user_info.account_name }}">
+                                        </div>
+                                    </div>
+                                    <div class="mb-2 row">
+                                        <label for="staticEmail" class="col-sm-4 col-form-label">Email</label>
+                                        <div class="col-sm-8">
+                                            <input type="email" readonly class="form-control-plaintext" id="staticEmail" value="{{ user_info.useremail }}">
+                                        </div>
+                                    </div>
+                                    <div class="mb-2 row">
+                                        <label for="staticPhone" class="col-sm-4 col-form-label">No. Telepon</label>
+                                        <div class="col-sm-8">
+                                            <input type="tel" readonly class="form-control-plaintext" id="staticPhone" value="{{ user_info.phone }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+        
+                    </div>
+                </div>
+      
+            </div>
+        </section>
+
+        <!-- Modal Edit -->
+        <div class="modal fade" id="editProfile" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Profile</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <div class="row">
+                                <div class="col-md-6 form-group">
+                                    <label for="exampleFormControlInput1" class="form-label">Nama Depan</label>
+                                    <input type="text" class="form-control" id="first_name" name="first_name" value="{{ user_info.first_name }}" autofocus>
+                                </div>
+                                <div class="col-md-6 form-group mt-3 mt-md-0">
+                                    <label for="exampleFormControlInput1" class="form-label">Nama Belakang</label>
+                                    <input type="text" class="form-control" id="last_name" name="last_name" value="{{ user_info.last_name }}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <img class="is-70x70" src="{{ url_for('static', filename=user_info.profile_pic_real)}}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label">Foto Profil</label>
+                            <input type="file" class="form-control" id="profile_picture" name="profile_picture" value="{{ user_info.profile_pic }}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label">No. Telepon</label>
+                            <input type="tel" class="form-control" id="phone" name="phone" value="{{ user_info.phone }}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label">Bio</label>
+                            <textarea class="form-control" id="bio" name="bio" rows="3">{{ user_info.bio }}</textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" onclick="update_profile()">Simpan</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+{% include 'user/templates/footer.html' %}

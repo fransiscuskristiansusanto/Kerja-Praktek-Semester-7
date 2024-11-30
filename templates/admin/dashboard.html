@@ -1,0 +1,175 @@
+{% include 'admin/templates/header.html' %}
+        <div class="main-panel">
+            <div class="content">
+                <div class="page-inner">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-body text-center">
+                                    <h3><strong>Beranda Admin Seimbang.or</strong></h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3">
+                            <div class="card card-stats card-primary card-round">
+                                <div class="card-body ">
+                                    <div class="row">
+                                        <div class="col-5">
+                                            <div class="icon-big text-center">
+                                                <i class="bi bi-people"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col col-stats">
+                                            <div class="numbers">
+                                                <p class="card-category">Data Pengguna</p>
+                                                <h4 class="card-title">
+                                                    {{users_count}}
+                                                </h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-sm-6 col-md-3">
+                            <div class="card card-stats card-primary card-round">
+                                <div class="card-body ">
+                                    <div class="row">
+                                        <div class="col-5">
+                                            <div class="icon-big text-center">
+                                                <i class="bi bi-flower1"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col col-stats">
+                                            <div class="numbers">
+                                                <p class="card-category">Data Layanan</p>
+                                                <h4 class="card-title">
+                                                    {{services_count}}
+                                                </h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-md-3">
+                            <div class="card card-stats card-primary card-round">
+                                <div class="card-body ">
+                                    <div class="row">
+                                        <div class="col-5">
+                                            <div class="icon-big text-center">
+                                                <i class="bi bi-credit-card-2-front"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col col-stats">
+                                            <div class="numbers">
+                                                <p class="card-category">Data Transaksi</p>
+                                                <h4 class="card-title">
+                                                    {{transactions_count}}
+                                                </h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-sm-6 col-md-3">
+                            <div class="card card-stats card-primary card-round">
+                                <div class="card-body ">
+                                    <div class="row">
+                                        <div class="col-5">
+                                            <div class="icon-big text-center">
+                                                <i class="bi bi-chat-left-quote"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col col-stats">
+                                            <div class="numbers">
+                                                <p class="card-category">Data Testimoni</p>
+                                                <h4 class="card-title">
+                                                    {{testimonials_count}}
+                                                </h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-3">
+                            <div class="card card-stats card-primary card-round">
+                                <div class="card-body ">
+                                    <div class="row">
+                                        <div class="col-5">
+                                            <div class="icon-big text-center">
+                                                <i class="bi bi-chat-dots"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col col-stats">
+                                            <div class="numbers">
+                                                <p class="card-category">Data Penghasilan</p>
+                                                <h4 class="card-title">
+                                                    {{income_rupiah}}
+                                                </h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-sm-6 col-md-3">
+                            <div class="card card-stats card-primary card-round">
+                                <div class="card-body ">
+                                    <div class="row">
+                                        <div class="col-5">
+                                            <div class="icon-big text-center">
+                                                <i class="bi bi-info-circle"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col col-stats">
+                                            <div class="numbers">
+                                                <p class="card-category">Data Pertanyaan dan Jawaban</p>
+                                                <h4 class="card-title">
+                                                    {{faqs_count}}
+                                                </h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-md-3">
+                            <div class="card card-stats card-primary card-round">
+                                <div class="card-body ">
+                                    <div class="row">
+                                        <div class="col-5">
+                                            <div class="icon-big text-center">
+                                                <i class="fas fa-envelope"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col col-stats">
+                                            <div class="numbers">
+                                                <p class="card-category">Data Hubungi Kami</p>
+                                                <h4 class="card-title">
+                                                    {{contact_count}}
+                                                </h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% include 'admin/templates/footer.html' %}

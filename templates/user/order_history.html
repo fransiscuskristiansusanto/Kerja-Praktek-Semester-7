@@ -1,0 +1,438 @@
+{% include 'user/templates/header.html' %}
+<main id="main" class="mt-5">
+
+    <!-- Form Pembayaran -->
+    <section id="contact" class="contact section-bg">
+        <div class="container" data-aos="fade-up">
+  
+            <div class="section-title">
+                <h2>Riwayat Pemesanan</h2>
+                <p>Riwayat Pemesanan Layanan</p>
+            </div>
+
+            <div class="row mt-4 justify-content-md-center">
+                <div class="col-lg-7">
+                    <div class="fillable-form">
+                        {% for transaction in transactions %}
+                        <div class="card mb-3 mx-auto pointer-cursor" style="max-width: 900px;">
+                            <div class="row g-0">
+                                <div class="col-6 col-md-6 col-lg-6">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Pemesanan #{{total_transactions - loop.index}} - {{transaction.name_of_the_service}}</h5>
+                                        <p class="card-text">Dipesan oleh {{transaction.name_of_buyer}}</p>
+                                        <p class="card-text"><small class="form-text text-muted">Tanggal pemesanan: {{transaction.date}}</small></p>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-6 col-lg-6 d-flex align-items-center">
+                                    <div class="card-body text-center">
+                                        {% if transaction.status == "pending" %}
+                                        <button class="btn btn-warning shadow-sm">Pending</button>
+                                        {% elif transaction.status == "diterima" %}
+                                        <button class="btn btn-success shadow-sm">Diterima</button>
+                                        {% elif transaction.status == "ditolak" %}
+                                        <button class="btn btn-danger shadow-sm">Ditolak</button>
+                                        {% elif transaction.status == "dikirim" %}
+                                        <button class="btn btn-info shadow-sm">Penggunaan Layanan</button>
+                                        {% elif transaction.status == "selesai" %}
+                                        <button class="btn btn-secondary shadow-sm">Selesai</button>
+                                        {% else %}
+                                        <button class="btn btn-secondary">Status Tidak Dikenali</button>
+                                        {% endif %}
+                                        <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#serviceOrder_{{transaction['_id']}}">Cek</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="serviceOrder_{{transaction['_id']}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Pemesanan</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body px-4">
+                                        {% if transaction.status == "pending" %}
+                                        <div class="row">
+                                            <div class="col-md-4 form-group text-center">
+                                                <a href="{{ url_for('static', filename=transaction.service_image) }}" target="_blank">
+                                                    <img src="{{ url_for('static', filename=transaction.service_image) }}" width="70" height="70">
+                                                </a>
+                                                <p class="mt-2">{{transaction.name_of_the_service}}</p>
+                                            </div>
+                                            <div class="col-md-4 form-group mt-3 mt-md-0">
+                                                <label>Jumlah</label>
+                                                <p class="form-control mt-2">{{transaction.quantity}}</p>
+                                            </div>
+                                            <div class="col-md-4 form-group mt-3 mt-md-0">
+                                                <label>Total Harga</label>
+                                                <p class="form-control mt-2">Rp {{transaction.total_price}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 form-group">
+                                                <label>Nama Pemesan</label>
+                                                <p class="form-control mt-2">{{transaction.name_of_buyer}}</p>
+                                            </div>
+                                            <div class="col-md-6 form-group mt-3 mt-md-0">
+                                                <label>Nomor Telepon Pemesan</label>
+                                                <p class="form-control mt-2">{{transaction.phone_of_buyer}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12 form-group">
+                                                <label>Catatan Pemesan</label>
+                                                {% if transaction.note_of_buyer == '' %}
+                                                <p class="form-control mt-2">Tidak ada catatan.</p>
+                                                {% else %}
+                                                <p class="form-control mt-2">{{transaction.note_of_buyer}}</p>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 form-group">
+                                                <label>Tanggal Pemesanan</label>
+                                                <p class="form-control mt-2">{{transaction.order_date}}</p>
+                                            </div>
+                                            <div class="col-md-6 form-group mt-3 mt-md-0">
+                                                <label>Waktu Pemesanan</label>
+                                                <p class="form-control mt-2">{{transaction.time}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 form-group">
+                                                <div class="col-md-12">
+                                                    <label>Bukti Pembayaran</label>
+                                                </div>
+                                                <div class="col-md-12 mt-3 mt-md-0 text-center">
+                                                    <a href="{{ url_for('static', filename=transaction.proof_of_payment) }}" target="_blank">
+                                                        <img src="{{ url_for('static', filename=transaction.proof_of_payment) }}" width="70" height="70">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 form-group mt-3 mt-md-0">
+                                                <label>Status</label>
+                                                <p class="form-control mt-2">{{transaction.status | capitalize}}</p>
+                                            </div>
+                                        </div>
+                                        {% elif transaction.status == "diterima" %}
+                                        <div class="row">
+                                            <div class="col-md-4 form-group text-center">
+                                                <a href="{{ url_for('static', filename=transaction.service_image) }}" target="_blank">
+                                                    <img src="{{ url_for('static', filename=transaction.service_image) }}" width="70" height="70">
+                                                </a>
+                                                <p class="mt-2">{{transaction.name_of_the_service}}</p>
+                                            </div>
+                                            <div class="col-md-4 form-group mt-3 mt-md-0">
+                                                <label>Jumlah</label>
+                                                <p class="form-control mt-2">{{transaction.quantity}}</p>
+                                            </div>
+                                            <div class="col-md-4 form-group mt-3 mt-md-0">
+                                                <label>Total Harga</label>
+                                                <p class="form-control mt-2">Rp {{transaction.total_price}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 form-group">
+                                                <label>Nama Pemesan</label>
+                                                <p class="form-control mt-2">{{transaction.name_of_buyer}}</p>
+                                            </div>
+                                            <div class="col-md-6 form-group mt-3 mt-md-0">
+                                                <label>Nomor Telepon Pemesan</label>
+                                                <p class="form-control mt-2">{{transaction.phone_of_buyer}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12 form-group">
+                                                <label>Catatan Pemesan</label>
+                                                {% if transaction.note_of_buyer == '' %}
+                                                <p class="form-control mt-2">Tidak ada catatan.</p>
+                                                {% else %}
+                                                <p class="form-control mt-2">{{transaction.note_of_buyer}}</p>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 form-group">
+                                                <label>Tanggal Pemesanan</label>
+                                                <p class="form-control mt-2">{{transaction.order_date}}</p>
+                                            </div>
+                                            <div class="col-md-6 form-group mt-3 mt-md-0">
+                                                <label>Waktu Pemesanan</label>
+                                                <p class="form-control mt-2">{{transaction.time}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 form-group">
+                                                <div class="col-md-12">
+                                                    <label>Bukti Pembayaran</label>
+                                                </div>
+                                                <div class="col-md-12 mt-3 mt-md-0 text-center">
+                                                    <a href="{{ url_for('static', filename=transaction.proof_of_payment) }}" target="_blank">
+                                                        <img src="{{ url_for('static', filename=transaction.proof_of_payment) }}" width="70" height="70">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 form-group mt-3 mt-md-0">
+                                                <label>Status</label>
+                                                <p class="form-control mt-2">{{transaction.status | capitalize}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12 form-group">
+                                                <label>Catatan Seimbang.or</label>
+                                                <p class="form-control mt-2">{{transaction.note}}</p>
+                                            </div>
+                                        </div>
+                                        {% elif transaction.status == "ditolak" %}
+                                        <div class="row">
+                                            <div class="col-md-4 form-group text-center">
+                                                <a href="{{ url_for('static', filename=transaction.service_image) }}" target="_blank">
+                                                    <img src="{{ url_for('static', filename=transaction.service_image) }}" width="70" height="70">
+                                                </a>
+                                                <p class="mt-2">{{transaction.name_of_the_service}}</p>
+                                            </div>
+                                            <div class="col-md-4 form-group mt-3 mt-md-0">
+                                                <label>Jumlah</label>
+                                                <p class="form-control mt-2">{{transaction.quantity}}</p>
+                                            </div>
+                                            <div class="col-md-4 form-group mt-3 mt-md-0">
+                                                <label>Total Harga</label>
+                                                <p class="form-control mt-2">Rp {{transaction.total_price}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 form-group">
+                                                <label>Nama Pemesan</label>
+                                                <p class="form-control mt-2">{{transaction.name_of_buyer}}</p>
+                                            </div>
+                                            <div class="col-md-6 form-group mt-3 mt-md-0">
+                                                <label>Nomor Telepon Pemesan</label>
+                                                <p class="form-control mt-2">{{transaction.phone_of_buyer}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12 form-group">
+                                                <label>Catatan Pemesan</label>
+                                                {% if transaction.note_of_buyer == '' %}
+                                                <p class="form-control mt-2">Tidak ada catatan.</p>
+                                                {% else %}
+                                                <p class="form-control mt-2">{{transaction.note_of_buyer}}</p>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 form-group">
+                                                <label>Tanggal Pemesanan</label>
+                                                <p class="form-control mt-2">{{transaction.order_date}}</p>
+                                            </div>
+                                            <div class="col-md-6 form-group mt-3 mt-md-0">
+                                                <label>Waktu Pemesanan</label>
+                                                <p class="form-control mt-2">{{transaction.time}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 form-group">
+                                                <div class="col-md-12">
+                                                    <label>Bukti Pembayaran</label>
+                                                </div>
+                                                <div class="col-md-12 mt-3 mt-md-0 text-center">
+                                                    <a href="{{ url_for('static', filename=transaction.proof_of_payment) }}" target="_blank">
+                                                        <img src="{{ url_for('static', filename=transaction.proof_of_payment) }}" width="70" height="70">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 form-group mt-3 mt-md-0">
+                                                <label>Status</label>
+                                                <p class="form-control mt-2">{{transaction.status | capitalize}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12 form-group">
+                                                <label>Alasan Penolakan</label>
+                                                <p class="form-control mt-2">{{transaction.note}}</p>
+                                            </div>
+                                        </div>
+                                        {% elif transaction.status == "dikirim" %}
+                                        <div class="row">
+                                            <div class="col-md-4 form-group text-center">
+                                                <a href="{{ url_for('static', filename=transaction.service_image) }}" target="_blank">
+                                                    <img src="{{ url_for('static', filename=transaction.service_image) }}" width="70" height="70">
+                                                </a>
+                                                <p class="mt-2">{{transaction.name_of_the_service}}</p>
+                                            </div>
+                                            <div class="col-md-4 form-group mt-3 mt-md-0">
+                                                <label>Jumlah</label>
+                                                <p class="form-control mt-2">{{transaction.quantity}}</p>
+                                            </div>
+                                            <div class="col-md-4 form-group mt-3 mt-md-0">
+                                                <label>Total Harga</label>
+                                                <p class="form-control mt-2">Rp {{transaction.total_price}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 form-group">
+                                                <label>Nama Pemesan</label>
+                                                <p class="form-control mt-2">{{transaction.name_of_buyer}}</p>
+                                            </div>
+                                            <div class="col-md-6 form-group mt-3 mt-md-0">
+                                                <label>Nomor Telepon Pemesan</label>
+                                                <p class="form-control mt-2">{{transaction.phone_of_buyer}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12 form-group">
+                                                <label>Catatan Pemesan</label>
+                                                {% if transaction.note_of_buyer == '' %}
+                                                <p class="form-control mt-2">Tidak ada catatan.</p>
+                                                {% else %}
+                                                <p class="form-control mt-2">{{transaction.note_of_buyer}}</p>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 form-group">
+                                                <label>Tanggal Pemesanan</label>
+                                                <p class="form-control mt-2">{{transaction.order_date}}</p>
+                                            </div>
+                                            <div class="col-md-6 form-group mt-3 mt-md-0">
+                                                <label>Waktu Pemesanan</label>
+                                                <p class="form-control mt-2">{{transaction.time}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 form-group">
+                                                <div class="col-md-12">
+                                                    <label>Bukti Pembayaran</label>
+                                                </div>
+                                                <div class="col-md-12 mt-3 mt-md-0 text-center">
+                                                    <a href="{{ url_for('static', filename=transaction.proof_of_payment) }}" target="_blank">
+                                                        <img src="{{ url_for('static', filename=transaction.proof_of_payment) }}" width="70" height="70">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 form-group mt-3 mt-md-0">
+                                                <label>Status</label>
+                                                <p class="form-control mt-2">{{transaction.status | capitalize}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12 form-group">
+                                                <label>Catatan Seimbang.or</label>
+                                                <p class="form-control mt-2">{{transaction.note}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12 form-group">
+                                                <label for="exampleFormControlInput1" class="form-label">Sudah menggunakan layanan? Silahkan berikan ulasan Anda</label>
+                                                <textarea class="form-control" data-id="{{transaction['_id']}}" id="service_review_{{transaction['_id']}}" name="service_review_{{transaction['_id']}}" rows="4" required></textarea>
+                                            </div>
+                                        </div>
+                                        {% elif transaction.status == "selesai" %}
+                                        <div class="row">
+                                            <div class="col-md-4 form-group text-center">
+                                                <a href="{{ url_for('static', filename=transaction.service_image) }}" target="_blank">
+                                                    <img src="{{ url_for('static', filename=transaction.service_image) }}" width="70" height="70">
+                                                </a>
+                                                <p class="mt-2">{{transaction.name_of_the_service}}</p>
+                                            </div>
+                                            <div class="col-md-4 form-group mt-3 mt-md-0">
+                                                <label>Jumlah</label>
+                                                <p class="form-control mt-2">{{transaction.quantity}}</p>
+                                            </div>
+                                            <div class="col-md-4 form-group mt-3 mt-md-0">
+                                                <label>Total Harga</label>
+                                                <p class="form-control mt-2">Rp {{transaction.total_price}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 form-group">
+                                                <label>Nama Pemesan</label>
+                                                <p class="form-control mt-2">{{transaction.name_of_buyer}}</p>
+                                            </div>
+                                            <div class="col-md-6 form-group mt-3 mt-md-0">
+                                                <label>Nomor Telepon Pemesan</label>
+                                                <p class="form-control mt-2">{{transaction.phone_of_buyer}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12 form-group">
+                                                <label>Catatan Pemesan</label>
+                                                {% if transaction.note_of_buyer == '' %}
+                                                <p class="form-control mt-2">Tidak ada catatan.</p>
+                                                {% else %}
+                                                <p class="form-control mt-2">{{transaction.note_of_buyer}}</p>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 form-group">
+                                                <label>Tanggal Pemesanan</label>
+                                                <p class="form-control mt-2">{{transaction.order_date}}</p>
+                                            </div>
+                                            <div class="col-md-6 form-group mt-3 mt-md-0">
+                                                <label>Waktu Pemesanan</label>
+                                                <p class="form-control mt-2">{{transaction.time}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 form-group">
+                                                <div class="col-md-12">
+                                                    <label>Bukti Pembayaran</label>
+                                                </div>
+                                                <div class="col-md-12 mt-3 mt-md-0 text-center">
+                                                    <a href="{{ url_for('static', filename=transaction.proof_of_payment) }}" target="_blank">
+                                                        <img src="{{ url_for('static', filename=transaction.proof_of_payment) }}" width="70" height="70">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 form-group mt-3 mt-md-0">
+                                                <label>Status</label>
+                                                <p class="form-control mt-2">{{transaction.status | capitalize}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12 form-group">
+                                                <label for="exampleFormControlTextarea1" class="form-label">Ulasan Anda</label>
+                                                <p class="form-control mt-2">{{transaction.service_review}}</p>
+                                            </div>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                
+                                    <div class="modal-footer px-3 d-flex justify-content-center gap-2">
+                                        {% if transaction.status == "pending" %}
+                                        <button type="button" class="btn btn-secondary flex-fill" data-bs-dismiss="modal">Tutup</button>
+                                        {% elif transaction.status == "diterima" %}
+                                        <button type="button" class="btn btn-secondary flex-fill" data-bs-dismiss="modal">Tutup</button>
+                                        {% elif transaction.status == "ditolak" %}
+                                        <button type="button" class="btn btn-secondary flex-fill" data-bs-dismiss="modal">Tutup</button>
+                                        {% elif transaction.status == "dikirim" %}
+                                        <button type="button" class="btn btn-primary flex-fill" onclick="send_testimonials('{{transaction['_id']}}')">Terima Pesanan</button>
+                                        <button type="button" class="btn btn-secondary flex-fill" data-bs-dismiss="modal">Tutup</button>
+                                        {% elif transaction.status == "selesai" %}
+                                        <button type="button" class="btn btn-secondary flex-fill" data-bs-dismiss="modal">Tutup</button>
+                                        {% endif %}
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="info-box" style="padding: 15px;">
+                        <p class="ms-3 me-3 mt-4 mb-3">Apabila Anda masih ada pertanyaan atau ingin mengetahui informasi lebih lanjut, Seimbang.or siap melayani Anda melalui Instagram atau WhatsApp berikut (Anda dapat menekan icon di bawah ini).</p>
+                        <div class="icon-container" style="display: flex; justify-content: center; gap: 15px; margin-top: 10px">
+                            <a target="_blank" href="https://www.instagram.com/direct/t/106523790748164"><i class="bx bxl-instagram"></i></a>
+                            <a target="_blank" href="https://wa.me/6282219652028"><i class="bx bxl-whatsapp"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+{% include 'user/templates/footer.html' %}

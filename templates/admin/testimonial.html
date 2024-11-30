@@ -1,0 +1,76 @@
+{% include 'admin/templates/header.html' %}
+        <div class="main-panel">
+            <div class="content">
+                <div class="page-inner">
+                    <div class="page-header">
+                        <h4 class="page-title">Data Testimoni</h4>
+                        <ul class="breadcrumbs">
+                            <li class="nav-home">
+                                <a href="admin-beranda">
+                                    <i class="bi bi-archive"></i>
+                                </a>
+                            </li>
+                            <li class="separator">
+                                <i class="flaticon-right-arrow"></i>
+                            </li>
+                            <li class="nav-item">
+                                <a>Data Testimoni</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="d-flex align-items-center">
+                                        <h4 class="card-title">Data Testimoni</h4>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table id="add-row" class="display table table-striped table-hover">
+                                            <thead>
+                                                <tr class="text-center">
+                                                    <th>No</th>
+                                                    <th>Tanggal Pemesanan</th>
+                                                    <th>Waktu Pemesanan</th>
+                                                    <th>Nama Pemesan</th>
+                                                    <th>Layanan yang Dipesan</th>
+                                                    <th>Ulasan</th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                {% for testimonial in testimonials %}
+                                                <tr>
+                                                    <td>{{loop.index}}</td>
+                                                    <td>{{testimonial.order_date}}</td>
+                                                    <td>{{testimonial.time}}</td>
+                                                    <td>{{testimonial.name_of_buyer}}</td>
+                                                    <td>{{testimonial.purchased_service}}</td>
+                                                    <td>{{testimonial.review}}</td>
+                                                </tr>
+                                                {% endfor %}
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        
+    </div>
+    <script>
+        $(document).ready(function () {
+            $('#add-row').DataTable({
+                pageLength: 25
+            });
+        });
+    </script>
+{% include 'admin/templates/footer.html' %}

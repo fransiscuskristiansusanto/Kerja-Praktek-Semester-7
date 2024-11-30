@@ -1,0 +1,69 @@
+{% include 'admin/templates/header.html' %}
+        <div class="main-panel">
+            <div class="content">
+                <div class="page-inner">
+                    <div class="page-header">
+                        <h4 class="page-title">Data Pengguna</h4>
+                        <ul class="breadcrumbs">
+                            <li class="nav-home">
+                                <a href="admin-beranda">
+                                    <i class="bi bi-archive"></i>
+                                </a>
+                            </li>
+                            <li class="separator">
+                                <i class="flaticon-right-arrow"></i>
+                            </li>
+                            <li class="nav-item">
+                                <a>Data Pengguna</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="d-flex align-items-center">
+                                        <h4 class="card-title">Data Pengguna</h4>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+
+                                    <div class="table-responsive">
+                                        <table id="add-row" class="display table table-striped table-hover">
+                                            <thead>
+                                                <tr class="text-center">
+                                                    <th>Nama Akun</th>
+                                                    <th>Nama</th>
+                                                    <th>Peran</th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                {% for user in users %} {% if user.role == 'member' %}
+                                                <tr>
+                                                    <td>{{user.account_name}}</td>
+                                                    <td>{{user.profile_name}}</td>
+                                                    <td>{{user.role}}</td>
+                                                </tr>
+                                                {% endif %} {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+{% include 'admin/templates/footer.html' %}
+<script>
+    $(document).ready(function () {
+        $('#add-row').DataTable({
+            pageLength: 25
+        });
+    });
+</script>
